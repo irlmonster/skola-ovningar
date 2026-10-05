@@ -24,6 +24,11 @@ namespace Övning_1.Models
                 {
                     throw new ArgumentException("Namn kan inte vara tomt");
                 }
+
+                if (value.Any(char.IsDigit))
+                {
+                    throw new ArgumentException("Namn får inte innehålla siffror");
+                }
                 _name = value;
             }
         } 
@@ -34,7 +39,7 @@ namespace Övning_1.Models
             {
                 if (value < 0)
                 {
-                    throw new ArgumentException("Lön kan inte vara negativ (endast om du är skyldig oss dollars!)");
+                    throw new ArgumentException("Lön kan inte vara negativ");
                 }
                 _salary = value;
             }

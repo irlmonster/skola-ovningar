@@ -1,5 +1,4 @@
-﻿using Övning_1;
-using Övning_1.Models;
+﻿using Övning_1.Models;
 using Övning_1.Services;
 
 Console.WriteLine("Hallå restaurangen!");
@@ -17,22 +16,47 @@ while (true)
     switch (input)
     {
         case ("1"):
-            Console.WriteLine("Skriv namn på anställd:");
-            string name = Console.ReadLine();
-
-            Console.WriteLine("Skriv lön på anställd:");
-            string salaryInput = Console.ReadLine();
-            if (!int.TryParse(salaryInput, out int salary))
+            string name;
+            while (true)
             {
-                Console.WriteLine("Ogiltig lön. Försök igen.");
-                break;
+                Console.WriteLine("Skriv namn på anställd:");
+                name = Console.ReadLine();
+
+                if (!string.IsNullOrWhiteSpace(name) && !name.Any(char.IsDigit))
+                {
+                    break;
+                }
+
+                Console.WriteLine("Ogiltigt namn. Det får inte vara tomt eller innehålla siffror.");
             }
 
+            int salary;
+            while (true)
+            {
+                Console.WriteLine("Skriv lön på anställd:");
+                string salaryInput = Console.ReadLine();
 
-            Employee employee = new Employee(name, salary);
-            registry.AddEmployee(employee);
+                if (int.TryParse(salaryInput, out salary) && salary >= 0)
+                {
+                    break;
+                }
 
-            Console.WriteLine($"Anställd {name} med lön {salary} har lagts till.");
+                Console.WriteLine("Ogiltig lön. Ange ett heltal som inte är negativt.");
+            }
+
+            try
+            {
+                Employee employee = new Employee(name, salary);
+                registry.AddEmployee(employee);
+
+                Console.WriteLine($"Anställd {name} med lön {salary} har lagts till.");
+                
+            }
+            catch (ArgumentException ex)
+            {
+
+                Console.WriteLine(ex.Message);
+            }
             break;
     
 
@@ -49,6 +73,10 @@ while (true)
 
         case ("3"):
             return;
+
+        default:
+            Console.WriteLine("Ogiltigt val. Försök igen.");
+            break;
     }
 
 }
