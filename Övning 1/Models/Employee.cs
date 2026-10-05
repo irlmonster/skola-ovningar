@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Övning_1
+namespace Övning_1.Models
 {
     internal class Employee
     {

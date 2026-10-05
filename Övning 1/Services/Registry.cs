@@ -1,9 +1,9 @@
-﻿using Övning_1;
+﻿using Övning_1.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Övning_1
+namespace Övning_1.Services
 {
     internal class Registry
     {
