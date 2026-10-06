@@ -19,7 +19,7 @@ namespace Övning_1.Services
         {
             if (employee == null)
             {
-                throw new ArgumentNullException(nameof(employee), "Fältet kan inte lämnas tomt");
+                throw new ArgumentNullException(nameof(employee), "Fältet kan inte vara tomt");
             }
             _employees.Add(employee);
         }
