@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Övning_1.Models
 {
-    internal class Employee
+    public class Employee
     {
 
         private string _name;

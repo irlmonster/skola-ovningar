@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="Övning 1/Övning 1.csproj" />
+  <Project Path="Övning1.Tests/Övning1.Tests.csproj" Id="6b73a6aa-016e-42a1-a3a5-79c9796077c2" />
 </Solution>

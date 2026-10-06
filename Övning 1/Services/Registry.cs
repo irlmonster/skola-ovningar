@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Övning_1.Services
 {
-    internal class Registry
+    public class Registry
     {
         private readonly List<Employee> _employees = new List<Employee>();
 
