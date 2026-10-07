@@ -2,18 +2,19 @@
 {
     private static void Main(string[] args)
     {
-        Console.WriteLine("Huvudmeny:");
-        Console.WriteLine("1. Ungdom, pensionär eller standard (pris)");
-        Console.WriteLine("2. Upprepa 10 gånger");
-        Console.WriteLine("3. Det tredje ordet");
-        Console.WriteLine("0. Avsluta programmet");
-        Console.Write("Välj ett alternativ (1-3): ");
-        string input = Console.ReadLine();
-
+        // Huvudmenyn
         bool isRunning = true;
         while (isRunning)
         {
+            Console.WriteLine("Huvudmeny:");
+            Console.WriteLine("1. Ungdom, pensionär eller standard (pris)");
+            Console.WriteLine("2. Upprepa 10 gånger");
+            Console.WriteLine("3. Det tredje ordet");
+            Console.WriteLine("0. Avsluta programmet");
+            Console.WriteLine("--------------------------------------------");
+            Console.Write("Välj ett alternativ (1-3): ");
 
+            string input = Console.ReadLine();
             switch (input)
             {
                 case "1":
@@ -51,9 +52,7 @@
 
 
     // Metoder:
-
-
-    //Få priset baserat på ålder
+    //Returnera priset baserat på ålder
     static int GetPrice(int age)
     {
         if (age < 20)
@@ -62,7 +61,7 @@
         }
         else
         {
-            if (age >= 64)
+            if (age > 64)
             {
                 return 90; // pensionärspris
             }
@@ -73,89 +72,86 @@
         }
     }
 
-    // Få pris baserat på singel
+    // Få singel output baserat på ålder
     static void SinglePrice()
     {
-        Console.WriteLine("Skriv in din ålder: ");
-        int ageInput = int.Parse(Console.ReadLine());
-        if (ageInput < 20)
+        Console.Write("Skriv in din ålder: ");
+        int ageInput = int.Parse(Console.ReadLine()); // tar in åldern
+        int price = GetPrice(ageInput); // kallar på prismetoden och skickar in åldern som sedan returnerar priset
+        // if-satsen kollar på priset och skriver ut det inklusive kategori (ungdom, pensionär eller standard)
+        if (price == 80)
         {
+            Console.WriteLine();
             Console.WriteLine("Du går som ungdom, priset är 80 kr");
+            Console.WriteLine();
         }
-        else if (ageInput >= 64)
+        else if (price == 90)
         {
+            Console.WriteLine();
             Console.WriteLine("Du går som pensionär, priset är 90 kr");
+            Console.WriteLine();
         }
-        else if (ageInput >= 20 && ageInput <= 63)
+        else 
         {
+            Console.WriteLine();
             Console.WriteLine("Du går som standard, priset är 120 kr");
+            Console.WriteLine();
         }
-        else
-        {
-            Console.WriteLine("Ogiltig ålder. Vänligen försök igen.");
-            Console.WriteLine("Skriv in din ålder: ");
-            ageInput = int.Parse(Console.ReadLine());
-        }
+
     }
 
     // Få priset baserat på grupp
     static void GroupPrice()
     {
-        Console.WriteLine("Skriv in antal personer i gruppen (max 5): ");
+        Console.Write("Skriv in antal personer i gruppen: ");
         int GroupInput = int.Parse(Console.ReadLine());
-        if (GroupInput >= 5)
+        Console.WriteLine();
+        int TotalSum = 0; 
+
+        for (int i = 1; i <= GroupInput; i++)
         {
-             
+            Console.Write($"Skriv in åldern för person {i}: ");
+            int ageInput = int.Parse(Console.ReadLine());
+            Console.WriteLine($"Pris för person {i}: {GetPrice(ageInput)} kr"); // skriver ut priset för varje person i gruppen i varie itteration
+            TotalSum += GetPrice(ageInput); // lägger till priset för varje person i gruppen
         }
-        else if (GroupInput < 5)
-        {
-            Console.WriteLine("Ni är inte en grupp, priset är 120 kr per person");
-        }
-        else
-        {
-            Console.WriteLine("Ogiltigt antal. Vänligen försök igen.");
-            Console.WriteLine("Skriv in antal personer i gruppen: ");
-            GroupInput = int.Parse(Console.ReadLine());
-        }
+        Console.WriteLine();
+        Console.WriteLine($"Totalpris för gruppen på {GroupInput} personer är: {TotalSum} kr");
+        Console.WriteLine();
     }
 
     //Meny för biografen
     static void CinemaMenu()
     {
+        Console.WriteLine();
         Console.WriteLine("***********************************************");
         Console.WriteLine("*** Hej och välkommen till M & M's Biograf! ***");
         Console.WriteLine("***********************************************");
         Console.WriteLine();
 
-
+        Console.WriteLine("Du valde 1, Ungdom, pensionär eller standard");
         Console.WriteLine();
-        Console.WriteLine("du valde 1, Ungdom, pensionär eller standard");
 
         // Starta submenyn
         bool isSubMenuRunning = true;
         //singel eller grupp
         Console.WriteLine("1. Singel");
         Console.WriteLine("2. Grupp");
-        Console.WriteLine("Välj ett alternativ (1-2): ");
+        Console.Write("Välj ett alternativ (1-2): ");
         int SubMenuInput = int.Parse(Console.ReadLine());
 
         switch (SubMenuInput)
         {
             // Singel
             case 1:
-                int age = int.TryParse(Console.ReadLine(), out age) ? age : 0;
-                int price = GetPrice(age);
-                Console.WriteLine($"Priset för en person i din ålder är {price} kr.");
+                SinglePrice();
                 break;
 
             // Grupp
             case 2:
-                // Call the GetGroupPrice method to get the group price
-            break;
-        }
-
-        Console.WriteLine();
-        
+                GroupPrice();
+                break;
+        }   
 
     }
 
