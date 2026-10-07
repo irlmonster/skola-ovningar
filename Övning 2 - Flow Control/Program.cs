@@ -7,7 +7,7 @@
         while (isRunning)
         {
             Console.WriteLine("Huvudmeny:");
-            Console.WriteLine("1. Ungdom, pensionär eller standard (pris)");
+            Console.WriteLine("1. Ungdom, pensionär eller standard (Biografen)");
             Console.WriteLine("2. Upprepa 10 gånger");
             Console.WriteLine("3. Det tredje ordet");
             Console.WriteLine("0. Avsluta programmet");
@@ -33,10 +33,11 @@
                     //Skriver ut det tredje ordet
                     Console.WriteLine();
                     Console.WriteLine("Du valde 3, Det tredje ordet.");
+                    ShowThirdWord();
                     Console.WriteLine();
                     break;
                 case "0":
-                    // tar oss tillbaka till huvudmenyn
+                    // Avlsuta programmet
                     isRunning = false;
                     Console.WriteLine();
                     Console.WriteLine("Tack för att du använde M & M's applikation, välkommen tillbaka!");
@@ -59,7 +60,7 @@
 
     // METODER:
     /* 
-    Säkerhetsmetod för att kontrollera så att användaren matar in ogiltiga värden, t.ex. bokstäver istället för siffror.
+    Säkerhetsmetod för att kontrollera så att användaren inte matar in ogiltiga värden, t.ex. bokstäver istället för siffror.
     */
     static int ReadInt(string prompt)
     {
@@ -67,14 +68,16 @@
         while (true)
         {
             Console.Write(prompt);
-            string input = Console.ReadLine() ?? ""; 
-            if (int.TryParse(input, out result))
+            string input = Console.ReadLine() ?? "";
+
+            // Godkänn bara om texten är ett heltal OCH talet är 0 eller större
+            if (int.TryParse(input, out result) && result >= 0)
             {
                 return result;
             }
             else
             {
-                Console.WriteLine("Ogiltig inmatning. Vänligen ange ett heltal.");
+                Console.WriteLine("Ogiltig inmatning. Vänligen ange ett heltal som är 0 eller större.");
             }
         }
     }
@@ -85,7 +88,7 @@
     */
     static void ShowThirdWord()
     {
-        Console.WriteLine();
+        Console.WriteLine("(mellanslag och skiljetecken räknas inte)");
         Console.Write("Skriv in en sträng: ");
         string input = Console.ReadLine() ?? ""; // ?? "" ersätter tydligen null med en tom sträng för att undvika nullreferensfel
         char[] separators = new char[] { ' ', ',', '.', ';', ':', '!', '?' }; // lagt till några extra skiljetecken för att fokusera på ord
@@ -102,7 +105,6 @@
         }
     }
 
-
      
     /* 
     Metod för att upprepa 10 gånger
@@ -112,7 +114,7 @@
     {
         for (int i = 1; i <= 10; i++)
         {
-            Console.Write($"{i}.{input} "); 
+            Console.Write($"{i}. {input} "); 
         }
         Console.WriteLine();
         
@@ -121,10 +123,19 @@
 
     /*
     Metoder för biografen
-    Returnera priset baserat på ålder
     */
+
+    //Returnera priset baserat på ålder
     static int GetPrice(int age)
     {
+        // Gratis för barn under 5 år och äldre än 100 år.
+        // Kollas först, annars tas det av ungdoms eller pensionärsvillkoret.
+        if (age < 5 || age > 100)
+        {
+            return 0;
+        }
+
+        // Nästlad if-sats: pensionärsfrågan ställs bara om personen inte är ungdom
         if (age < 20)
         {
             return 80; // ungdomspris
@@ -161,6 +172,12 @@
             Console.WriteLine("Du går som pensionär, priset är 90 kr");
             Console.WriteLine();
         }
+        else if (price == 0)
+        {
+            Console.WriteLine();
+            Console.WriteLine("Du går gratis!");
+            Console.WriteLine();
+        }
         else 
         {
             Console.WriteLine();
@@ -179,7 +196,6 @@
 
         for (int i = 1; i <= GroupInput; i++)
         {
-            Console.Write($"Skriv in åldern för person {i}: ");
             int ageInput = ReadInt($"Skriv in åldern för person {i}: "); // Kör min nya metod för att kontrollera så det inte är bokstäver
             Console.WriteLine($"Pris för person {i}: {GetPrice(ageInput)} kr"); // skriver ut priset för varje person i gruppen i varie itteration
             TotalSum += GetPrice(ageInput); // lägger till priset för varje person i gruppen
@@ -194,11 +210,13 @@
     {
         Console.WriteLine();
         Console.WriteLine("***********************************************");
+        Console.WriteLine("***********************************************");
         Console.WriteLine("*** Hej och välkommen till M & M's Biograf! ***");
+        Console.WriteLine("***********************************************");
         Console.WriteLine("***********************************************");
         Console.WriteLine();
 
-        Console.WriteLine("Du valde 1, Ungdom, pensionär eller standard");
+        Console.WriteLine("Du valde 1, Ungdom, pensionär eller standard.");
         Console.WriteLine();
 
         // Starta submenyn
@@ -225,12 +243,16 @@
                 isSubMenuRunning = false;
                 break;
 
+            default:
+                Console.WriteLine();
+                Console.WriteLine("Ogiltigt val. Vänligen försök igen.");
+                Console.WriteLine();
+                break;
 
         }   
 
 
     }
-
 
 
 }
