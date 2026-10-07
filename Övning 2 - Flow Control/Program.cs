@@ -23,8 +23,10 @@
                 case "2":
                     //RepeatTenTimes();
                     Console.WriteLine();
-                    Console.WriteLine("du valde 2, Upprepa 10 gånger");         
-                    Console.WriteLine();
+                    Console.WriteLine("Du valde 2, Upprepa 10 gånger");         
+                    Console.Write("Skriv in en sträng: ");
+                    string StringInput = Console.ReadLine();
+                    RepeatTenTimes(StringInput);
                     break;
                 case "3":
                     //ShowThirdWord();
@@ -35,7 +37,8 @@
                 case "0":
                     isRunning = false;
                     Console.WriteLine();
-                    Console.WriteLine("Tack för att du använde M & M's Biograf, välkommen tillbaka, Hej då! :)");
+                    Console.WriteLine("Tack för att du använde M & M's applikation, välkommen tillbaka!");
+                    Console.WriteLine("Hej då! :)");
                     Console.WriteLine();
                     break;
                 default:
@@ -51,8 +54,31 @@
     }
 
 
-    // Metoder:
-    //Returnera priset baserat på ålder
+    // METODER:
+
+
+
+     
+    /* 
+    Metod för att upprepa 10 gånger
+    Skriver ut strängen 10 gånger med nummer framför
+    */
+    static void RepeatTenTimes(string input)
+    {
+        for (int i = 1; i <= 10; i++)
+        {
+            Console.Write($"{i}.{input} "); 
+        }
+        Console.WriteLine();
+        
+    }
+
+
+
+    /*
+    Metoder för biografen
+    Returnera priset baserat på ålder
+    */
     static int GetPrice(int age)
     {
         if (age < 20)
@@ -120,7 +146,7 @@
         Console.WriteLine();
     }
 
-    //Meny för biografen
+    // Meny för biografen
     static void CinemaMenu()
     {
         Console.WriteLine();
@@ -137,6 +163,7 @@
         //singel eller grupp
         Console.WriteLine("1. Singel");
         Console.WriteLine("2. Grupp");
+        Console.WriteLine("0. För att gå till huvudmenyn");
         Console.Write("Välj ett alternativ (1-2): ");
         int SubMenuInput = int.Parse(Console.ReadLine());
 
@@ -151,7 +178,14 @@
             case 2:
                 GroupPrice();
                 break;
+
+            case 0:
+                isSubMenuRunning = false;
+                break;
+
+
         }   
+
 
     }
 
