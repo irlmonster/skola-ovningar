@@ -18,23 +18,25 @@
             switch (input)
             {
                 case "1":
+                    // Biomenyn
                     CinemaMenu();
                     break;
                 case "2":
-                    //RepeatTenTimes();
+                    // Upprepa 10 gånger
                     Console.WriteLine();
-                    Console.WriteLine("Du valde 2, Upprepa 10 gånger");         
+                    Console.WriteLine("Du valde 2, Upprepa 10 gånger.");         
                     Console.Write("Skriv in en sträng: ");
                     string StringInput = Console.ReadLine();
                     RepeatTenTimes(StringInput);
                     break;
                 case "3":
-                    //ShowThirdWord();
+                    //Skriver ut det tredje ordet
                     Console.WriteLine();
-                    Console.WriteLine("du valde 3, Det tredje ordet");
+                    Console.WriteLine("Du valde 3, Det tredje ordet.");
                     Console.WriteLine();
                     break;
                 case "0":
+                    // tar oss tillbaka till huvudmenyn
                     isRunning = false;
                     Console.WriteLine();
                     Console.WriteLine("Tack för att du använde M & M's applikation, välkommen tillbaka!");
@@ -42,6 +44,7 @@
                     Console.WriteLine();
                     break;
                 default:
+                    // Ogiltigt val, kör menyn igen.
                     Console.WriteLine();
                     Console.WriteLine("Ogiltigt val. Vänligen försök igen.");
                     Console.WriteLine();
@@ -55,7 +58,49 @@
 
 
     // METODER:
+    /* 
+    Säkerhetsmetod för att kontrollera så att användaren matar in ogiltiga värden, t.ex. bokstäver istället för siffror.
+    */
+    static int ReadInt(string prompt)
+    {
+        int result;
+        while (true)
+        {
+            Console.Write(prompt);
+            string input = Console.ReadLine() ?? ""; 
+            if (int.TryParse(input, out result))
+            {
+                return result;
+            }
+            else
+            {
+                Console.WriteLine("Ogiltig inmatning. Vänligen ange ett heltal.");
+            }
+        }
+    }
 
+
+    /* 
+    Metod för att skriva ut det tredje ordet i en sträng med hantering av flera skiljetecken och tomma strängar. 
+    */
+    static void ShowThirdWord()
+    {
+        Console.WriteLine();
+        Console.Write("Skriv in en sträng: ");
+        string input = Console.ReadLine() ?? ""; // ?? "" ersätter tydligen null med en tom sträng för att undvika nullreferensfel
+        char[] separators = new char[] { ' ', ',', '.', ';', ':', '!', '?' }; // lagt till några extra skiljetecken för att fokusera på ord
+        var Words = input.Split(separators, StringSplitOptions.RemoveEmptyEntries); //RemoveEmptyEntries tar bort flera skiljetecken i rad
+
+        // Kollar så att det finns minst 3 ord i strängen innan vi försöker skriva ut det tredje ordet
+        if (Words.Length >= 3)
+        {
+            Console.WriteLine($"Det tredje ordet är: {Words[2]}");
+        }
+        else
+        {
+            Console.WriteLine("Strängen innehåller inte tillräckligt många ord.");
+        }
+    }
 
 
      
@@ -72,7 +117,6 @@
         Console.WriteLine();
         
     }
-
 
 
     /*
@@ -101,9 +145,9 @@
     // Få singel output baserat på ålder
     static void SinglePrice()
     {
-        Console.Write("Skriv in din ålder: ");
-        int ageInput = int.Parse(Console.ReadLine()); // tar in åldern
+        int ageInput = ReadInt("Skriv in din ålder: ");
         int price = GetPrice(ageInput); // kallar på prismetoden och skickar in åldern som sedan returnerar priset
+
         // if-satsen kollar på priset och skriver ut det inklusive kategori (ungdom, pensionär eller standard)
         if (price == 80)
         {
@@ -129,15 +173,14 @@
     // Få priset baserat på grupp
     static void GroupPrice()
     {
-        Console.Write("Skriv in antal personer i gruppen: ");
-        int GroupInput = int.Parse(Console.ReadLine());
+        int GroupInput = ReadInt("Skriv in antal personer i gruppen: "); // Kör min nya metod för att kontrollera så det inte är bokstäver
         Console.WriteLine();
         int TotalSum = 0; 
 
         for (int i = 1; i <= GroupInput; i++)
         {
             Console.Write($"Skriv in åldern för person {i}: ");
-            int ageInput = int.Parse(Console.ReadLine());
+            int ageInput = ReadInt($"Skriv in åldern för person {i}: "); // Kör min nya metod för att kontrollera så det inte är bokstäver
             Console.WriteLine($"Pris för person {i}: {GetPrice(ageInput)} kr"); // skriver ut priset för varje person i gruppen i varie itteration
             TotalSum += GetPrice(ageInput); // lägger till priset för varje person i gruppen
         }
@@ -163,9 +206,8 @@
         //singel eller grupp
         Console.WriteLine("1. Singel");
         Console.WriteLine("2. Grupp");
-        Console.WriteLine("0. För att gå till huvudmenyn");
-        Console.Write("Välj ett alternativ (1-2): ");
-        int SubMenuInput = int.Parse(Console.ReadLine());
+        Console.WriteLine("0. För att gå tillbaka till huvudmenyn");
+        int SubMenuInput = ReadInt("Välj ett alternativ (1-2): "); // Kör min nya metod för att kontrollera så det inte är bokstäver
 
         switch (SubMenuInput)
         {
