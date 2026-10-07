@@ -7,4 +7,9 @@ Detta gör det enklare för användaren att hitta det de letar efter utan att be
    - Singel (räknar ut kostnaden för enkelbiljett baserat på ålder)
    - Grupp (räknar ut kostnaden för gruppbiljett baserat på antal personer och ålder)
 
-2. 
+2. Upprepa 10 gånger, inga konstigheter, bara en enkel loop som räknar upp till 10 och skriver ut varje nummer.
+
+3. Tredje ordet
+   - Skriv ut det tredje ordet i en mening som användaren matar in, vi kontrollerar så att meningen innehåller minst tre ord (inga skiljetecken eller mellanslag)
+
+Gjorde en metod som jag använder vid inmatning för att kontrollera så att validering är korrekt, istället för att skriva samma kod flera gånger.
