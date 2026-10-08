@@ -7,6 +7,9 @@
             {
                 Console.WriteLine("=== Start av programmet ===");
 
+
+                bool success = false;
+
                 // Exempel 1: try-catch-finally
                 try
                 {
@@ -15,6 +18,7 @@
                     var result = ProcessFile(path);
                   
                     Console.WriteLine($"\nResultat: {result}");
+                    success = true;
                 }
                 catch (FileNotFoundException ex)
                 {
@@ -31,6 +35,11 @@
                     // Specifikt fel om nolldivision
                     Console.WriteLine($"Kan inte dividera med noll: {ex.Message}");
                 }
+                catch (InvalidOperationException ex)
+                {
+                    // Specifikt fel om filen är tom
+                    Console.WriteLine($"Ogiltig åtgärd: {ex.Message}");
+                }
                 catch (Exception ex)
                 {
                     // Fallback för alla övriga obekanta fel
@@ -42,7 +51,18 @@
                     Console.WriteLine("Cleanup: Logging avslutat anrop.");
                 }
 
-                Console.WriteLine("Programmet avslutas normalt.");
+
+                // Berättar om beräkningen lyckades eller misslyckades
+                if (success == true)
+                {
+                    Console.WriteLine("Programmet avslutas. Beräkningen lyckades.");
+                }
+                else
+                {
+                    Console.WriteLine("Programmet avslutas. Beräkningen misslyckades.");
+                }
+                
+                
             }
 
             // Exempel på metod som själv kastar ett undantag (throw)
@@ -66,30 +86,21 @@
                     // Försöker omvandla text till tal
                     int number = int.Parse(line); // Kan ge FormatException
 
-                    // Division: kan ge DivideByZeroException
+                    if (number == 0)
+                        throw new DivideByZeroException();
+
                     return 100.0 / number;
-                }
-                catch (FormatException ex)
-                {
-                    // Vi kan logga eller omformulera felet
-                    Console.WriteLine($"Formatfel i ProcessFile: {ex.Message}");
-                    // Vi kan välja att låta metoden "kasta upp" felet
-                    throw; // När du i `catch` bara vill logga/analysera,
-                           // men låta anroparen (t.ex. en högre nivå i applikationen)
-                           // bestämma hur man ska återhämta sig. 
-                }
-                catch (Exception ex)
-                {
-                    // Om vi vill ge en mer meningsfull feltyp till anroparen
-                    throw new InvalidOperationException(
-                    "Det gick inte att processa filen.",
-                    ex); // InnerException = ursprunglig fel
                 }
                 finally
                 {
-                    // Garanterad stängning av resurs
-                    reader?.Close();
-                    Console.WriteLine("finally i ProcessFile: StreamReader stängd.");
+
+                    if (reader != null)
+                    {
+                        reader.Close();
+                        Console.WriteLine("finally i ProcessFile: StreamReader stängd.");
+                    }
+
+
                 }
             }
         }
