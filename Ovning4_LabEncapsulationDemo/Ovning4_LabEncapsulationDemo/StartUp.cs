@@ -5,11 +5,11 @@ using System.Globalization;
 
 namespace Ovning4_LabEncapsulationDemo
 {
-    internal class Program
+    internal class StartUp
     {
         static void Main(string[] args)
         {
-            // Gör att "666.66" kan parsas och att utskriften blir 2640.00 och inte 2640,00
+            // Punkt som decimaltecken, annars kraschar decimal.Parse på svenskt windows lärde jag mig
             CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
 
             var lines = int.Parse(Console.ReadLine()!);
